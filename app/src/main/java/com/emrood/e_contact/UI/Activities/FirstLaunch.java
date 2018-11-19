@@ -88,7 +88,8 @@ public class FirstLaunch extends AppCompatActivity {
         // add few more layouts if you want
         layouts = new int[]{
                 R.layout.welcome,
-                R.layout.language};
+                R.layout.language,
+                R.layout.my_info};
 
         // adding bottom dots
         addBottomDots(0);
@@ -126,6 +127,7 @@ public class FirstLaunch extends AppCompatActivity {
     private void launchHomeScreen() {
         Intent i  = new Intent(FirstLaunch.this, Launcher.class);
         startActivity(i);
+        overridePendingTransition(R.anim.right, R.anim.left);
     }
 
 

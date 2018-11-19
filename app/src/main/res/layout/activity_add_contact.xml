@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/addContactScroll"
+        android:layout_height="match_parent"
+        android:paddingBottom="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:isScrollContainer="true"
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            tools:context=".UI.Activities.AddContact">
+            
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginBottom="5dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="#FF000000"
+                    android:id="@+id/ivContactPhoto"
+                    android:layout_centerHorizontal="true"
+                    
+                    android:src="@mipmap/ic_launcher_round"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_margin="4dp"
+                android:text="@string/informations_personnels"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/ivName"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/edtName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivProfil"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/edtfirst_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/last_name"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:shadowColor="@android:color/black"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:singleLine="true"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/holo_blue_dark" />
+
+                    <requestFocus />
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/ivLastName"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/lastName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivProfil"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/edtLastname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/firstname"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:shadowColor="@android:color/black"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:singleLine="true"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textColorHint="@android:color/darker_gray" />
+
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/ivEntreprise"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/entreprise"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivProfil"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/edtEntreprise"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/entreprise"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:shadowColor="@android:color/black"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:singleLine="true"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textColorHint="@android:color/darker_gray" />
+
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/darker_gray"/>
+            
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:text="Numero"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/ivCellular"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/phone_cellular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivProfil"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/edtPhoneCellular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/cellulaire"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:shadowColor="@android:color/black"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:singleLine="true"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textColorHint="@android:color/darker_gray" />
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/ivWorkPhone"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/phoneWork"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivProfil"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/edtphoneWork"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/professionnel"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:shadowColor="@android:color/black"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:singleLine="true"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textColorHint="@android:color/darker_gray" />
+
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/ivOtherphone"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/phoneOther"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivProfil"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/edtPhoneOther"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/autre"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:shadowColor="@android:color/black"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:singleLine="true"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textColorHint="@android:color/darker_gray" />
+
+
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/darker_gray"/>
+            
+            
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_margin="4dp"
+                android:text="@string/courriel"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/ivEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/email"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivProfil"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/edtEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/e_mail"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:shadowColor="@android:color/black"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:singleLine="true"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textColorHint="@android:color/darker_gray" />
+
+
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/ivWorkMail"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/workmail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivProfil"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/edtWorlMail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/email_professionnel"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:shadowColor="@android:color/black"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:singleLine="true"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textColorHint="@android:color/darker_gray" />
+
+
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/ivOtherMail"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/othermail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivProfil"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/edtOtherMail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/other_mail"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:shadowColor="@android:color/black"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:singleLine="true"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textColorHint="@android:color/darker_gray" />
+
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/darker_gray"/>
+            
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_margin="4dp"
+                android:text="@string/autre"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/ivBirthday"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/birthday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivProfil"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/edtBirthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/birthday"
+                        android:inputType="date"
+                        android:maxLines="1"
+                        android:shadowColor="@android:color/black"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:singleLine="true"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textColorHint="@android:color/darker_gray" />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/ivNotes"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/notes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivProfil"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/edtNotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/note"
+                        android:inputType="text"
+                        android:lines="5"
+                        android:maxLines="10"
+                        android:shadowColor="@android:color/black"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:singleLine="true"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textColorHint="@android:color/darker_gray" />
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

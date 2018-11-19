@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.emrood.e_contact.UI.Activities.AddContact">
+
+
+    <item
+        android:id="@+id/save_contact"
+        android:icon="@drawable/ic_done_all_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/save"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/undo"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_delete_forever_white_24dp"
+        android:title="@string/annuler"
+        app:showAsAction="ifRoom" />
+
+</menu>

@@ -98,7 +98,7 @@ public class Launcher extends AppCompatActivity {
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
-        i = new Intent(Launcher.this, MainActivity.class);
+        i = new Intent(Launcher.this, ContactActivity.class);
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +115,7 @@ public class Launcher extends AppCompatActivity {
             @Override
             public void run() {
                 startActivity(i);
-//                overridePendingTransition(R.anim.right, R.anim.left);
+                overridePendingTransition(R.anim.right, R.anim.left);
                 finish();
 
             }

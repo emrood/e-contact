@@ -8,6 +8,24 @@
     <string name="set_language">sélectionner</string>
     <string name="next_welcome">Suivant</string>
     <string name="next">suivant</string>
+    <string name="my_contacts">Mes contacts</string>
+    <string name="e_scan">e-Scan</string>
+    <string name="mes_infos">Mes infos</string>
+    <string name="e_qr">E-QR</string>
+    <string name="last_name">Nom</string>
+    <string name="autre">Autre</string>
+    <string name="entreprise">Entreprise</string>
+    <string name="professionnel">Professionnel</string>
+    <string name="e_mail">E-mail</string>
+    <string name="other_mail">Autre e-mail</string>
+    <string name="new_contact">Nouveau contact</string>
+    <string name="birthday">birthday</string>
+    <string name="informations_personnels">Informations Personnels</string>
+    <string name="courriel">Courriel</string>
+    <string name="quit_message">Pressez une nouvelle fois pour quitter</string>
+    <string name="annuler">Annuler</string>
+    <string name="save">Sauvegarder</string>
+    <string name="obligation_field">Ce champ est obligatoire</string>
     <string-array name="languages">
         <item>Français</item>
         <item>Anglais</item>
@@ -15,13 +33,13 @@
     </string-array>
 
     <array name="array_dot_active">
-        <item>#FFFFF</item>
-        <item>#FFFFF</item>
-        <item>#FFFFF</item>
+        <item>#a7a7a7</item>
+        <item>#4f4f4f</item>
+        <item>#d3d3d3</item>
     </array>
     <array name="array_dot_inactive">
-        <item>#FFFFF</item>
-        <item>#FFFFF</item>
-        <item>#FFFFF</item>
+        <item>#a7a7a7</item>
+        <item>#4f4f4f</item>
+        <item>#d3d3d3</item>
     </array>
 </resources>
