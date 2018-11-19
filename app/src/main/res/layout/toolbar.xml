@@ -1,0 +1,16 @@
+<android.support.design.widget.AppBarLayout android:id="@+id/appBar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:title="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:titleTextColor="@android:color/white"
+        android:background="@color/colorPrimary"
+        android:id="@+id/myToolbar"
+        app:layout_scrollFlags="scroll|enterAlways"/>
+
+</android.support.design.widget.AppBarLayout>

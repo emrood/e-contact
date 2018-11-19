@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">e-contact</string>
+
+    <string name="title_activity_launcher">Launcher</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="emrood_caption">powered by emrood</string>
+    <string name="set_language">sélectionner</string>
+    <string name="next_welcome">Suivant</string>
+    <string name="next">suivant</string>
+    <string-array name="languages">
+        <item>Français</item>
+        <item>Anglais</item>
+        <item>Créole</item>
+    </string-array>
+
+    <array name="array_dot_active">
+        <item>#FFFFF</item>
+        <item>#FFFFF</item>
+        <item>#FFFFF</item>
+    </array>
+    <array name="array_dot_inactive">
+        <item>#FFFFF</item>
+        <item>#FFFFF</item>
+        <item>#FFFFF</item>
+    </array>
+</resources>
