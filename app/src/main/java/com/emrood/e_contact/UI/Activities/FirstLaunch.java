@@ -1,11 +1,14 @@
 package com.emrood.e_contact.UI.Activities;
 
+import android.Manifest;
 import android.arch.persistence.room.Transaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +29,8 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import static com.emrood.e_contact.UI.Activities.ContactActivity.hasPermissions;
+
 public class FirstLaunch extends AppCompatActivity {
 
 
@@ -43,6 +48,17 @@ public class FirstLaunch extends AppCompatActivity {
     private PreferenceManager prefManager;
     public static String langPref = "HT";
 
+    private static final int PERMISSION_ALL = 1;
+
+    private static final String[] PERMISSIONS = {
+            Manifest.permission.CAMERA,
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.USE_BIOMETRIC,
+            Manifest.permission.BODY_SENSORS,
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.READ_CONTACTS
+    };
+
     Gson gson;
     String list;
     ArrayList<Transaction> listTransaction;
@@ -55,10 +71,13 @@ public class FirstLaunch extends AppCompatActivity {
 
         prefManager = new PreferenceManager(this);
 
-
         if (!prefManager.isFirstTimeLaunch()) {
             launchHomeScreen();
             finish();
+        }
+
+        if(!hasPermissions(this, PERMISSIONS)){
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
 
         // Making notification bar transparent
@@ -122,6 +141,19 @@ public class FirstLaunch extends AppCompatActivity {
             }
         });
 
+
+
+    }
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private void launchHomeScreen() {

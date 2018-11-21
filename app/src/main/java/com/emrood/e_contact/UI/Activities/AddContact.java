@@ -1,6 +1,7 @@
 package com.emrood.e_contact.UI.Activities;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import com.emrood.e_contact.App;
 import com.emrood.e_contact.Model.Contact;
 import com.emrood.e_contact.R;
+import com.example.circulardialog.CDialog;
+import com.example.circulardialog.extras.CDConstants;
 import com.jackandphantom.circularimageview.CircleImage;
 
 import java.util.Date;
@@ -41,7 +44,8 @@ public class AddContact extends AppCompatActivity {
         setContentView(R.layout.activity_add_contact);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
-//        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.new_contact_text);
         init();
 
     }
@@ -117,9 +121,25 @@ public class AddContact extends AppCompatActivity {
             }
 
             ((App) App.getInstance()).getDaoSession().getContactDao().save(c);
-            Intent i = new Intent(AddContact.this, ContactActivity.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.right, R.anim.left);
+
+            new CDialog(this).createAlert("Contact Enregistre",
+                    CDConstants.SUCCESS,   // Type of dialog
+                    CDConstants.LARGE)    //  size of dialog
+                    .setAnimation(CDConstants.SCALE_FROM_BOTTOM_TO_TOP)     //  Animation for enter/exit
+                    .setDuration(1500)   // in milliseconds
+                    .setTextSize(CDConstants.NORMAL_TEXT_SIZE)  // CDConstants.LARGE_TEXT_SIZE, CDConstants.NORMAL_TEXT_SIZE
+                    .show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent i = new Intent(AddContact.this, ContactActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.right, R.anim.left);
+                }
+            }, 1500);
+
+
 
         }else{
             Toast.makeText(this, "not saved", Toast.LENGTH_SHORT).show();

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -39,37 +40,46 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
     public ContactRecyclerAdapter(ArrayList<Contact> contacts, Context mContext) {
         this.contacts = contacts;
         this.mContext = mContext;
+        inflater = LayoutInflater.from(mContext);
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = inflater.inflate(R.layout.item_contact, viewGroup, false);
+
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        String firstname = contacts.get(i).getFirst_name();
-        String lastnma = contacts.get(i).getLast_name();
+
+
+        Contact c = contacts.get(i);
+        String firstname = c.getFirst_name();
+        String lastnma = c.getLast_name();
         String phone = " ";
         String email = " ";
-        if(!TextUtils.isEmpty(contacts.get(i).getCellular_phone())){
-            phone = contacts.get(i).getCellular_phone();
-        }else if(!TextUtils.isEmpty(contacts.get(i).getWork_phone())){
-            phone = contacts.get(i).getWork_phone();
-        }else if(!TextUtils.isEmpty(contacts.get(i).getOther_phone())){
-            phone = contacts.get(i).getOther_phone();
+        if(!TextUtils.isEmpty(c.getCellular_phone())){
+            phone = c.getCellular_phone();
+        }else if(!TextUtils.isEmpty(c.getWork_phone())){
+            phone = c.getWork_phone();
+        }else if(!TextUtils.isEmpty(c.getOther_phone())){
+            phone = c.getOther_phone();
         }
-        if(!TextUtils.isEmpty(contacts.get(i).getPersonal_email())){
-            email = contacts.get(i).getPersonal_email();
-        }else if(!TextUtils.isEmpty(contacts.get(i).getWork_email())){
-            email = contacts.get(i).getWork_email();
-        }else if(!TextUtils.isEmpty(contacts.get(i).getOther_email())){
-            email = contacts.get(i).getOther_email();
+        if(!TextUtils.isEmpty(c.getPersonal_email())){
+            email = c.getPersonal_email();
+        }else if(!TextUtils.isEmpty(c.getWork_email())){
+            email = c.getWork_email();
+        }else if(!TextUtils.isEmpty(c.getOther_email())){
+            email = c.getOther_email();
         }
 
-        viewHolder.tvName.setText(lastnma + " " + firstname);
+        if(TextUtils.equals(lastnma, firstname)){
+            viewHolder.tvName.setText(firstname);
+        }else{
+            viewHolder.tvName.setText(lastnma + " " + firstname);
+        }
         viewHolder.tvEmail.setText(email);
         viewHolder.tvPhone.setText(phone);
 
@@ -81,12 +91,13 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
 
     @Override
     public int getItemCount() {
-        return 0;
+        return contacts.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView tvName, tvPhone, tvEmail;
         CircleImageView tvPhoto;
+        public RelativeLayout foreground;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,6 +105,7 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
             tvPhone = itemView.findViewById(R.id.tvPhoneNumber);
             tvEmail = itemView.findViewById(R.id.tvEmail);
             tvPhoto = itemView.findViewById(R.id.ivContactPhoto);
+            foreground = itemView.findViewById(R.id.foreground);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
@@ -146,14 +158,27 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
 
         if (contactList != null) {
             contacts.addAll(contactList);
+            notifyDataSetChanged();
         }
-
-        notifyDataSetChanged();
     }
 
     public void removeContact(int position) {
         contacts.remove(position);
         notifyItemRemoved(position);
+    }
+
+
+    public String returnNumber(int position){
+        Contact c = contacts.get(position);
+        if(!TextUtils.isEmpty(c.getCellular_phone())){
+            return c.getCellular_phone();
+        }else if(!TextUtils.isEmpty(c.getWork_phone())){
+            return c.getWork_phone();
+        }else if(!TextUtils.isEmpty(c.getOther_phone())){
+            return c.getOther_phone();
+        }
+
+        return null;
     }
 
     private void setAnimation(View viewToAnimate, int position) {

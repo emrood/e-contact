@@ -52,4 +52,12 @@
     <string name="annuler">Annuler</string>
     <string name="save">Sauvegarder</string>
     <string name="obligation_field">Ce champ est obligatoire</string>
+    <string name="new_contact_text">Nouveau Contact</string>
+    <string name="contacts_loading">Chargement de plus de contacts</string>
+    <string name="contacts_loading_message">Patientez s\'il vous plait</string>
+    <string name="bad_qr">QR-Code not from e-contact</string>
+    <string name="good_qr">Good e-QR</string>
+    <string name="saved_contact">Contact Enregistré</string>
+    <string name="unsaved_contact">Contact existe déja</string>
+    <string name="delete_contact">Suppression de</string>
 </resources>

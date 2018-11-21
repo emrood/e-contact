@@ -1,31 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">e-contact</string>
+
     <string name="title_activity_launcher">Launcher</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="emrood_caption">powered by emrood</string>
     <string name="set_language">sélectionner</string>
     <string name="next_welcome">Suivant</string>
-    <string name="next">suivant</string>
-    <string name="my_contacts">Mes contacts</string>
-    <string name="e_scan">e-Scan</string>
-    <string name="mes_infos">Mes infos</string>
-    <string name="e_qr">E-QR</string>
-    <string name="last_name">Nom</string>
-    <string name="autre">Autre</string>
-    <string name="entreprise">Entreprise</string>
-    <string name="professionnel">Professionnel</string>
-    <string name="e_mail">E-mail</string>
-    <string name="other_mail">Autre e-mail</string>
-    <string name="new_contact">Nouveau contact</string>
-    <string name="birthday">birthday</string>
-    <string name="informations_personnels">Informations Personnels</string>
-    <string name="courriel">Courriel</string>
-    <string name="quit_message">Pressez une nouvelle fois pour quitter</string>
-    <string name="annuler">Annuler</string>
-    <string name="save">Sauvegarder</string>
-    <string name="obligation_field">Ce champ est obligatoire</string>
+    <string name="next">précedent</string>
     <string-array name="languages">
         <item>Français</item>
         <item>Anglais</item>
@@ -42,4 +24,40 @@
         <item>#4f4f4f</item>
         <item>#d3d3d3</item>
     </array>
+    <string name="title_activity_contact">ContactActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="my_contacts">Mes contacts</string>
+    <string name="e_scan">e-Scan</string>
+    <string name="mes_infos">Mes infos</string>
+    <string name="e_qr">E-QR</string>
+    <string name="last_name">Nom</string>
+    <string name="autre">Autre</string>
+    <string name="note">Note</string>
+    <string name="firstname">Prénom</string>
+    <string name="entreprise">Entreprise</string>
+    <string name="cellulaire">cellulaire</string>
+    <string name="professionnel">Professionnel</string>
+    <string name="e_mail">E-mail personnel</string>
+    <string name="email_professionnel">Email professionnel</string>
+    <string name="other_mail">Autre e-mail</string>
+    <string name="new_contact">Nouveau contact</string>
+    <string name="birthday">birthday</string>
+    <string name="informations_personnels">Informations Personnels</string>
+    <string name="courriel">Courriel</string>
+    <string name="quit_message">Pressez une nouvelle fois pour quitter</string>
+    <string name="annuler">Annuler</string>
+    <string name="save">Sauvegarder</string>
+    <string name="obligation_field">Ce champ est obligatoire</string>
+    <string name="new_contact_text">Nouveau Contact</string>
+    <string name="contacts_loading">Chargement de plus de contacts</string>
+    <string name="contacts_loading_message">Patientez s\'il vous plait</string>
+    <string name="bad_qr">QR-Code not from e-contact</string>
+    <string name="good_qr">Good e-QR</string>
+    <string name="saved_contact">Contact Enregistré</string>
+    <string name="unsaved_contact">Contact existe déja</string>
+    <string name="delete_contact">Suppression de</string>
 </resources>
