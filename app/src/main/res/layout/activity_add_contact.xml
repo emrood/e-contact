@@ -22,22 +22,21 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:background="@android:color/darker_gray"
+                android:background="@drawable/ebanner4"
                 android:layout_marginBottom="5dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="125dp"
                     android:layout_height="125dp"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="5dp"
+                    app:civ_border_color="#303F9F"
                     android:id="@+id/ivContactPhoto"
                     android:layout_centerHorizontal="true"
-                    
-                    android:src="@mipmap/ic_launcher_round"/>
+                    android:src="@drawable/add_contact"/>
 
             </RelativeLayout>
 
@@ -59,7 +58,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    app:srcCompat="@mipmap/ic_launcher_round" />
+                    app:srcCompat="@drawable/baseline_verified_user_black_36dp" />
 
 
                 <android.support.design.widget.TextInputLayout
@@ -83,7 +82,12 @@
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="2"
+                        android:background="@drawable/custom_img"
+                        android:layout_marginTop="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="2dp"
                         android:singleLine="true"
+                        android:paddingLeft="15dp"
                         android:textColor="@android:color/black"
                         android:textColorHint="@android:color/holo_blue_dark" />
 
@@ -128,9 +132,14 @@
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="2"
+                        android:background="@drawable/custom_img"
+                        android:layout_marginTop="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="2dp"
                         android:singleLine="true"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:textColorHint="@android:color/darker_gray" />
+                        android:paddingLeft="15dp"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/holo_blue_dark" />
 
 
                 </android.support.design.widget.TextInputLayout>
@@ -168,14 +177,19 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/entreprise"
                         android:inputType="text"
-                        android:maxLines="1"
+                       android:maxLines="1"
                         android:shadowColor="@android:color/black"
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="2"
+                        android:background="@drawable/custom_img"
+                        android:layout_marginTop="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="2dp"
                         android:singleLine="true"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:textColorHint="@android:color/darker_gray" />
+                        android:paddingLeft="15dp"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/holo_blue_dark" />
 
 
                 </android.support.design.widget.TextInputLayout>
@@ -207,7 +221,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    app:srcCompat="@mipmap/ic_launcher_round" />
+                    app:srcCompat="@drawable/baseline_smartphone_black_36dp" />
 
 
                 <android.support.design.widget.TextInputLayout
@@ -226,14 +240,19 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/cellulaire"
                         android:inputType="phone"
-                        android:maxLines="1"
+                       android:maxLines="1"
                         android:shadowColor="@android:color/black"
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="2"
+                        android:background="@drawable/custom_img"
+                        android:layout_marginTop="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="2dp"
                         android:singleLine="true"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:textColorHint="@android:color/darker_gray" />
+                        android:paddingLeft="15dp"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/holo_blue_dark" />
 
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -251,7 +270,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    app:srcCompat="@mipmap/ic_launcher_round" />
+                    app:srcCompat="@drawable/baseline_work_black_36dp" />
 
 
                 <android.support.design.widget.TextInputLayout
@@ -270,14 +289,19 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/professionnel"
                         android:inputType="phone"
-                        android:maxLines="1"
+                       android:maxLines="1"
                         android:shadowColor="@android:color/black"
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="2"
+                        android:background="@drawable/custom_img"
+                        android:layout_marginTop="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="2dp"
                         android:singleLine="true"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:textColorHint="@android:color/darker_gray" />
+                        android:paddingLeft="15dp"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/holo_blue_dark" />
 
 
                 </android.support.design.widget.TextInputLayout>
@@ -296,7 +320,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    app:srcCompat="@mipmap/ic_launcher_round" />
+                    app:srcCompat="@drawable/baseline_contact_phone_black_36dp" />
 
 
                 <android.support.design.widget.TextInputLayout
@@ -315,14 +339,19 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/autre"
                         android:inputType="number"
-                        android:maxLines="1"
+                       android:maxLines="1"
                         android:shadowColor="@android:color/black"
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="2"
+                        android:background="@drawable/custom_img"
+                        android:layout_marginTop="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="2dp"
                         android:singleLine="true"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:textColorHint="@android:color/darker_gray" />
+                        android:paddingLeft="15dp"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/holo_blue_dark" />
 
 
 
@@ -354,7 +383,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    app:srcCompat="@mipmap/ic_launcher_round" />
+                    app:srcCompat="@drawable/baseline_email_black_36dp" />
 
 
                 <android.support.design.widget.TextInputLayout
@@ -373,14 +402,19 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/e_mail"
                         android:inputType="textEmailAddress"
-                        android:maxLines="1"
+                       android:maxLines="1"
                         android:shadowColor="@android:color/black"
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="2"
+                        android:background="@drawable/custom_img"
+                        android:layout_marginTop="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="2dp"
                         android:singleLine="true"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:textColorHint="@android:color/darker_gray" />
+                        android:paddingLeft="15dp"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/holo_blue_dark" />
 
 
 
@@ -400,7 +434,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    app:srcCompat="@mipmap/ic_launcher_round" />
+                    app:srcCompat="@drawable/baseline_work_black_36dp" />
 
 
                 <android.support.design.widget.TextInputLayout
@@ -419,14 +453,19 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/email_professionnel"
                         android:inputType="textEmailAddress"
-                        android:maxLines="1"
+                       android:maxLines="1"
                         android:shadowColor="@android:color/black"
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="2"
+                        android:background="@drawable/custom_img"
+                        android:layout_marginTop="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="2dp"
                         android:singleLine="true"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:textColorHint="@android:color/darker_gray" />
+                        android:paddingLeft="15dp"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/holo_blue_dark" />
 
 
 
@@ -446,7 +485,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    app:srcCompat="@mipmap/ic_launcher_round" />
+                    app:srcCompat="@drawable/baseline_alternate_email_black_36dp" />
 
 
                 <android.support.design.widget.TextInputLayout
@@ -465,14 +504,19 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/other_mail"
                         android:inputType="textEmailAddress"
-                        android:maxLines="1"
+                       android:maxLines="1"
                         android:shadowColor="@android:color/black"
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="2"
+                        android:background="@drawable/custom_img"
+                        android:layout_marginTop="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="2dp"
                         android:singleLine="true"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:textColorHint="@android:color/darker_gray" />
+                        android:paddingLeft="15dp"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/holo_blue_dark" />
 
 
                 </android.support.design.widget.TextInputLayout>
@@ -504,7 +548,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    app:srcCompat="@mipmap/ic_launcher_round" />
+                    app:srcCompat="@drawable/baseline_date_range_black_36dp" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/birthday"
@@ -520,16 +564,22 @@
                         android:id="@+id/edtBirthday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/custom_img"
+                        android:clickable="true"
                         android:hint="@string/birthday"
-                        android:inputType="date"
+                        android:inputType="none|date"
                         android:maxLines="1"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="2dp"
                         android:shadowColor="@android:color/black"
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="2"
                         android:singleLine="true"
-                        android:textColor="@android:color/holo_blue_dark"
-                        android:textColorHint="@android:color/darker_gray" />
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/holo_blue_dark" />
 
 
                 </android.support.design.widget.TextInputLayout>
@@ -550,7 +600,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    app:srcCompat="@mipmap/ic_launcher_round" />
+                    app:srcCompat="@drawable/baseline_note_add_black_36dp" />
 
 
                 <android.support.design.widget.TextInputLayout
@@ -571,6 +621,7 @@
                         android:inputType="text"
                         android:lines="5"
                         android:maxLines="10"
+                        android:layout_marginTop="12dp"
                         android:shadowColor="@android:color/black"
                         android:shadowDx="1"
                         android:shadowDy="1"

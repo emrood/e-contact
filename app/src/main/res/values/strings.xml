@@ -33,7 +33,7 @@
     <string name="my_contacts">Mes contacts</string>
     <string name="e_scan">e-Scan</string>
     <string name="mes_infos">Mes infos</string>
-    <string name="e_qr">E-QR</string>
+    <string name="e_qr">my E-QR</string>
     <string name="last_name">Nom</string>
     <string name="autre">Autre</string>
     <string name="note">Note</string>
@@ -60,4 +60,25 @@
     <string name="saved_contact">Contact Enregistré</string>
     <string name="unsaved_contact">Contact existe déja</string>
     <string name="delete_contact">Suppression de</string>
+    <string name="edit">Editer</string>
+    <string name="add_fav">Ajouter aux favoris</string>
+    <string name="secret_contact_add">Faire un contact secret</string>
+    <string name="contact_update">Contact mise a jour</string>
+    <string name="contact_saved">Contact Enregistre</string>
+    <string name="select_picture">Choisir une photo</string>
+    <string name="choose_in_galery">Choisir dans la galerie</string>
+    <string name="camera">Camera</string>
+    <string name="annule">Annulé</string>
+    <string name="photo_contact">Photo du contact</string>
+    <string name="edition">Edition</string>
+    <string name="yes">Oui</string>
+    <string name="non">Non</string>
+    <string name="edit_action_title">Editer un contact</string>
+    <string name="validate_edit_annulation">Voulez vous annuler l\'édition de</string>
+    <string name="invalide_number">Numero invalide</string>
+    <string name="content">Contenue</string>
+    <string name="empty_field">Champ vide</string>
+    <string name="sending">Envoie...</string>
+    <string name="generate_contact_qr">Générer E-QR</string>
+    <string name="e_qr_all">E-QR</string>
 </resources>

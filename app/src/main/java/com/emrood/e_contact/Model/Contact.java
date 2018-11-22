@@ -2,6 +2,7 @@ package com.emrood.e_contact.Model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Unique;
 
 import java.io.Serializable;
@@ -51,12 +52,16 @@ public class Contact implements Serializable {
 
     String photo;
 
-    @Generated(hash = 1353000096)
+    Boolean isSecret = false;
+
+    Boolean isFav = false;
+
+    @Generated(hash = 802002569)
     public Contact(Long id, long contact_ID, String cellular_phone,
             String work_phone, String other_phone, String first_name,
             String last_name, String email, String personal_email,
             String work_email, String other_email, String note, Date birthday,
-            String entreprise, String photo) {
+            String entreprise, String photo, Boolean isSecret, Boolean isFav) {
         this.id = id;
         this.contact_ID = contact_ID;
         this.cellular_phone = cellular_phone;
@@ -72,6 +77,8 @@ public class Contact implements Serializable {
         this.birthday = birthday;
         this.entreprise = entreprise;
         this.photo = photo;
+        this.isSecret = isSecret;
+        this.isFav = isFav;
     }
 
     @Generated(hash = 672515148)
@@ -196,6 +203,22 @@ public class Contact implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public Boolean getIsSecret() {
+        return this.isSecret;
+    }
+
+    public void setIsSecret(Boolean isSecret) {
+        this.isSecret = isSecret;
+    }
+
+    public Boolean getIsFav() {
+        return this.isFav;
+    }
+
+    public void setIsFav(Boolean isFav) {
+        this.isFav = isFav;
     }
 
 

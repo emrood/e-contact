@@ -1,15 +1,29 @@
 package com.emrood.e_contact.UI.Activities;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -17,11 +31,18 @@ import android.widget.Toast;
 import com.emrood.e_contact.App;
 import com.emrood.e_contact.Model.Contact;
 import com.emrood.e_contact.R;
+import com.emrood.e_contact.Utils.Utils;
 import com.example.circulardialog.CDialog;
 import com.example.circulardialog.extras.CDConstants;
 import com.jackandphantom.circularimageview.CircleImage;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,6 +57,20 @@ public class AddContact extends AppCompatActivity {
     ScrollView add_contact_scroll;
 
     Boolean saveContact = true;
+    Contact contact;
+    public  Calendar myCalendar;
+    public DatePickerDialog.OnDateSetListener date;
+    Date d;
+    String photoPath = null;
+    static final int REQUEST_IMAGE_CAPTURE = 50;
+    static final int IMAGE_FROM_GALERY = 82;
+    Uri imageUri;
+    public File avatarFile = null;
+    public Bitmap bitmap = null;
+    public String photoFileName = "photo.jpg";
+    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    File photoFile;
+    public final String APP_TAG = "emrood";
 
 
     @Override
@@ -48,6 +83,92 @@ public class AddContact extends AppCompatActivity {
         actionBar.setTitle(R.string.new_contact_text);
         init();
 
+        try{
+            contact = (Contact) getIntent().getSerializableExtra("contactEdit");
+            Log.d("INFO", contact.getFirst_name());
+        }catch (Exception e){
+            Log.d("ERROR", e.getMessage());
+        }
+
+        if(contact != null){
+            actionBar.setTitle(R.string.edit_action_title);
+            inflateUIWithContactInfo(contact);
+        }
+
+
+    }
+
+    private void inflateUIWithContactInfo(Contact contact) {
+        edtFirstName.setText(contact.getFirst_name());
+        edtLastName.setText(contact.getLast_name());
+        edtEntreprise.setText(contact.getEntreprise());
+        edtPhoneCellular.setText(contact.getCellular_phone());
+        edtPhoneWork.setText(contact.getWork_phone());
+        edtPhoneOther.setText(contact.getOther_phone());
+        edtEmailPersonnal.setText(contact.getPersonal_email());
+        edtEmailProfessional.setText(contact.getWork_email());
+        edtEmailOther.setText(contact.getOther_email());
+        edtNotes.setText(contact.getNote());
+        try{
+            edtBirthday.setText(String.valueOf(new SimpleDateFormat("dd MMM yyyy", Locale.FRANCE).format(contact.getBirthday())));
+        }catch (Exception e){
+
+        }
+
+    }
+
+    private void selectImage() {
+        final CharSequence[] options = {getString(R.string.choose_in_galery), getString(R.string.camera), getString(R.string.annule) };
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setTitle(R.string.photo_contact);
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (options[item].equals(getString(R.string.choose_in_galery)))
+                {
+                    changePicture();
+                }else if(options[item].equals(getString(R.string.camera))){
+                    startCamera();
+                }
+                else if (options[item].equals(getString(R.string.annule))) {
+                    dialog.dismiss();
+                }
+            }
+
+        });
+        builder.show();
+    }
+
+    public void startCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        photoFile = getPhotoFileUri(photoFileName);
+        Uri fileProvider = FileProvider.getUriForFile(AddContact.this, "com.emrood.fileprovider", photoFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        }
+
+    }
+
+
+    public File getPhotoFileUri(String fileName) {
+        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
+
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+            Log.d(APP_TAG, "failed to create directory");
+        }
+        File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
+        photoPath = file.getAbsolutePath();
+        photoFileName = fileName;
+        return file;
+    }
+
+
+    public void changePicture(){
+        Intent i = new Intent(Intent.ACTION_PICK);
+        i.setType("image/*");
+        startActivityForResult(Intent.createChooser(i, getString(R.string.select_picture)), IMAGE_FROM_GALERY );
     }
 
 
@@ -64,15 +185,152 @@ public class AddContact extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.save_contact:
-                trySaveContact();
+                if(contact == null){
+                    trySaveContact();
+                }else{
+                    tryUpdateContact();
+                }
                 break;
             case R.id.undo:
-                Toast.makeText(this, "quit", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "quit", Toast.LENGTH_SHORT).show();
+                if(contact == null){
+                    finish();
+                }else{
+                    new AlertDialog.Builder(this)
+                            .setTitle(R.string.edition)
+                            .setMessage(getString(R.string.validate_edit_annulation) + " " + contact.getFirst_name() + " ?")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    finish();
+                                }})
+                            .setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            }).show();
+
+                }
+
                 break;
         }
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (requestCode == IMAGE_FROM_GALERY && resultCode == RESULT_OK) {
+            Toast.makeText(this, "GALERY", Toast.LENGTH_SHORT).show();
+            try {
+                if(data != null){
+                    imageUri = data.getData();
+                    photoPath = data.getDataString();
+                    contact.setPhoto(photoPath);
+                    avatarFile = new File(photoPath);
+                    photoFileName = avatarFile.getName();
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    updateAvatar(bitmap);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "CAMERA", Toast.LENGTH_SHORT).show();
+                imageUri = data.getData();
+                photoPath = data.getDataString();
+                contact.setPhoto(photoPath);
+                getPhotoFileUri(photoPath);
+                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                updateAvatar(takenImage);
+            } else { // Result was a failure
+                Toast.makeText(this, "Pas de photo", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void updateAvatar(Bitmap bitmap) {
+        ivContactPhoto.setImageBitmap(bitmap);
+    }
+
+    public void tryUpdateContact(){
+        if(TextUtils.isEmpty(edtFirstName.getText().toString())){
+            edtFirstName.setError(getString(R.string.obligation_field));
+            saveContact = false;
+
+        }
+        if(TextUtils.isEmpty(edtLastName.getText().toString())){
+            edtLastName.setError(getString(R.string.obligation_field));
+            saveContact = false;
+        }
+
+        if(saveContact){
+            Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
+            contact.setFirst_name(edtFirstName.getText().toString().trim());
+            contact.setLast_name(edtLastName.getText().toString().trim());
+            if(!TextUtils.isEmpty(edtPhoneCellular.getText().toString())){
+                contact.setCellular_phone(edtPhoneCellular.getText().toString().trim());
+            }
+            if(!TextUtils.isEmpty(edtBirthday.getText().toString())){
+                contact.setBirthday(new Date());
+            }
+            if(!TextUtils.isEmpty(edtEntreprise.getText().toString())){
+                contact.setEntreprise(edtEntreprise.getText().toString().trim());
+            }
+            if(!TextUtils.isEmpty(edtEmailPersonnal.getText().toString())){
+                contact.setPersonal_email(edtEmailPersonnal.getText().toString().trim());
+            }
+            if(!TextUtils.isEmpty(edtPhoneWork.getText().toString())){
+                contact.setWork_phone(edtPhoneWork.getText().toString().trim());
+            }
+            if(!TextUtils.isEmpty(edtEmailProfessional.getText().toString())){
+                contact.setWork_email(edtEmailProfessional.getText().toString().trim());
+            }
+            if(!TextUtils.isEmpty(edtNotes.getText().toString())){
+                contact.setNote(edtNotes.getText().toString().trim());
+            }
+            if(!TextUtils.isEmpty(edtPhoneOther.getText().toString())){
+                contact.setOther_phone(edtPhoneOther.getText().toString().trim());
+            }
+            if(!TextUtils.isEmpty(edtEmailOther.getText().toString())){
+                contact.setOther_email(edtEmailOther.getText().toString().trim());
+            }
+
+            if(d != null){
+                contact.setBirthday(d);
+            }
+
+
+            ((App) App.getInstance()).getDaoSession().getContactDao().update(contact);
+
+            new CDialog(this).createAlert(getString(R.string.contact_update),
+                    CDConstants.SUCCESS,   // Type of dialog
+                    CDConstants.LARGE)    //  size of dialog
+                    .setAnimation(CDConstants.SCALE_FROM_BOTTOM_TO_TOP)     //  Animation for enter/exit
+                    .setDuration(1500)   // in milliseconds
+                    .setTextSize(CDConstants.NORMAL_TEXT_SIZE)  // CDConstants.LARGE_TEXT_SIZE, CDConstants.NORMAL_TEXT_SIZE
+                    .show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent i = new Intent(AddContact.this, ContactActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.right, R.anim.left);
+                }
+            }, 1500);
+
+
+
+        }else{
+            Toast.makeText(this, "not saved", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -88,7 +346,7 @@ public class AddContact extends AppCompatActivity {
         }
 
         if(saveContact){
-            Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
             Contact c = new Contact();
             c.setFirst_name(edtFirstName.getText().toString().trim());
             c.setLast_name(edtLastName.getText().toString().trim());
@@ -120,9 +378,16 @@ public class AddContact extends AppCompatActivity {
                 c.setOther_email(edtEmailOther.getText().toString().trim());
             }
 
+            if(d != null){
+                c.setBirthday(d);
+            }
+
+            c.setIsFav(false);
+            c.setIsSecret(false);
+
             ((App) App.getInstance()).getDaoSession().getContactDao().save(c);
 
-            new CDialog(this).createAlert("Contact Enregistre",
+            new CDialog(this).createAlert(getString(R.string.contact_saved),
                     CDConstants.SUCCESS,   // Type of dialog
                     CDConstants.LARGE)    //  size of dialog
                     .setAnimation(CDConstants.SCALE_FROM_BOTTOM_TO_TOP)     //  Animation for enter/exit
@@ -162,7 +427,43 @@ public class AddContact extends AppCompatActivity {
         edtEntreprise = findViewById(R.id.edtEntreprise);
         ivContactPhoto = findViewById(R.id.ivContactPhoto);
         add_contact_scroll = findViewById(R.id.addContactScroll);
+
+        edtBirthday.setInputType(InputType.TYPE_NULL);
+
+        myCalendar = Calendar.getInstance();
+        date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                d = myCalendar.getTime();
+                edtBirthday.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
+            }
+
+        };
+
+
+        edtBirthday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(AddContact.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        ivContactPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
     }
+
+
 
     @Override
     protected void onStart() {
@@ -176,7 +477,24 @@ public class AddContact extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if(contact != null){
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.edition)
+                    .setMessage(getString(R.string.validate_edit_annulation) + " " + contact.getFirst_name() + " ?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            finish();
+                        }})
+                    .setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).show();
+        }else{
+            super.onBackPressed();
+        }
     }
 
     @Override

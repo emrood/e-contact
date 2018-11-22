@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:id="@+id/qrContainer"
     tools:context=".UI.Activities.QRViewerActivity">
 
 
@@ -21,6 +22,12 @@
         android:layout_below="@+id/ivQRCode"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="@string/e_qr" />
+        android:text="@string/e_qr_all" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true"
+        android:id="@+id/fullScreenView" />
 
 </RelativeLayout>

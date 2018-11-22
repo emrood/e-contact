@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -82,6 +83,13 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
         }
         viewHolder.tvEmail.setText(email);
         viewHolder.tvPhone.setText(phone);
+        if(c.getIsFav()){
+            viewHolder.ivContactProperties.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_star_yellow_600_24dp));
+        }else if(c.getIsSecret()){
+            viewHolder.ivContactProperties.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_visibility_red_500_24dp));
+        }else{
+            viewHolder.ivContactProperties.setVisibility(View.GONE);
+        }
 
 //        if(!TextUtils.isEmpty(contacts.get(i).getPhoto())){
 //            Glide.with(mContext).load("").into(viewHolder.tvPhoto);
@@ -97,6 +105,7 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView tvName, tvPhone, tvEmail;
         CircleImageView tvPhoto;
+        ImageView ivContactProperties;
         public RelativeLayout foreground;
 
         public ViewHolder(@NonNull View itemView) {
@@ -106,6 +115,7 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
             tvEmail = itemView.findViewById(R.id.tvEmail);
             tvPhoto = itemView.findViewById(R.id.ivContactPhoto);
             foreground = itemView.findViewById(R.id.foreground);
+            ivContactProperties = itemView.findViewById(R.id.ivContactProperty);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
@@ -127,6 +137,27 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
     }
 
 
+    public void makeContactFav(int pos){
+        contacts.get(pos).setIsFav(true);
+        notifyItemChanged(pos);
+    }
+
+    public void makeContactSecret(int pos){
+        contacts.get(pos).setIsSecret(true);
+        notifyItemChanged(pos);
+    }
+
+
+    public void removeContactFromFav(int pos){
+        contacts.get(pos).setIsFav(false);
+        notifyItemChanged(pos);
+    }
+
+    public void removeContactFromSecret(int pos){
+        contacts.get(pos).setIsSecret(false);
+        notifyItemChanged(pos);
+    }
+
     public Contact getContact(int id){
 
         try{
@@ -136,6 +167,14 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
         }
 
         return null;
+    }
+
+    public void setContactClickListener(ContactClickListener contactClickListener){
+        this.mContactClickListener = contactClickListener;
+    }
+
+    public void setmContactLongClickListener(ContactLongClickListener contactLongClickListener){
+        this.mContactLongClickListener = contactLongClickListener;
     }
 
     public void setFilter(ArrayList<Contact> arrayList) {

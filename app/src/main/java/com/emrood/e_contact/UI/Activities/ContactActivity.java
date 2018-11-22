@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.design.widget.TabLayout;
@@ -40,6 +41,9 @@ import com.emrood.e_contact.Model.QRObject;
 import com.emrood.e_contact.R;
 import com.emrood.e_contact.UI.Fragments.ContactList;
 import com.emrood.e_contact.UI.Fragments.ContactScan;
+import com.emrood.e_contact.UI.Listeners.ContactClickListener;
+import com.emrood.e_contact.UI.Listeners.ContactLongClickListener;
+import com.emrood.e_contact.UI.Listeners.SmsListener;
 import com.emrood.e_contact.Utils.Constant;
 import com.emrood.e_contact.Utils.PreferenceManager;
 import com.example.circulardialog.CDialog;
@@ -57,7 +61,9 @@ import static android.Manifest.permission.RECEIVE_SMS;
 
 
 
-public class ContactActivity extends AppCompatActivity {
+public class ContactActivity extends AppCompatActivity implements
+        ContactList.OnContactClickListener,
+        ContactList.OnContactLongClickListener, ContactClickListener, ContactLongClickListener, SmsListener {
 
 
 
@@ -173,6 +179,46 @@ public class ContactActivity extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onContactClick(Contact contact) {
+        ContactList contactList = (ContactList) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.view_pager + ":" + mViewPager.getCurrentItem());
+        contactList.onContactClick(contact);
+
+    }
+
+    @Override
+    public void onContactLongClick(Contact contact) {
+        ContactList contactList = (ContactList) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.view_pager + ":" + mViewPager.getCurrentItem());
+        contactList.onContactLongClick(contact);
+    }
+
+    @Override
+    public void onItemClick(View view, int positon) {
+//        Toast.makeText(this, "Good", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemLongClick(View v, int position) {
+//        Toast.makeText(this, "GOOD", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSmsContent(String content, String phone) {
+        Toast.makeText(this, getString(R.string.sending), Toast.LENGTH_SHORT).show();
+        reallySendSms(content, phone);
+    }
+
+    public void reallySendSms(String content, String number){
+        Uri smsUri = Uri.parse("tel:" + number);
+        Intent intent = new Intent(Intent.ACTION_VIEW, smsUri);
+        intent.putExtra("address", number);
+        intent.putExtra("sms_body", content);
+        intent.setType("vnd.android-dir/mms-sms");//here setType will set the previous data null.
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

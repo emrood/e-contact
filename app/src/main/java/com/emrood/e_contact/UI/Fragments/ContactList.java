@@ -1,9 +1,13 @@
 package com.emrood.e_contact.UI.Fragments;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.Lifecycle;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -19,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -34,7 +39,13 @@ import com.emrood.e_contact.App;
 import com.emrood.e_contact.Model.Contact;
 import com.emrood.e_contact.Model.ContactDao;
 import com.emrood.e_contact.R;
+import com.emrood.e_contact.UI.Activities.AddContact;
+import com.emrood.e_contact.UI.Activities.ContactActivity;
+import com.emrood.e_contact.UI.Activities.QRViewerActivity;
 import com.emrood.e_contact.UI.Adapters.ContactRecyclerAdapter;
+import com.emrood.e_contact.UI.Listeners.ContactClickListener;
+import com.emrood.e_contact.UI.Listeners.ContactLongClickListener;
+import com.emrood.e_contact.UI.Listeners.SmsListener;
 import com.emrood.e_contact.UI.Utils.RecyclerItemTouchHelper;
 import com.emrood.e_contact.UI.Utils.SwipeHelper;
 
@@ -48,7 +59,9 @@ import java.util.List;
 /**
  * Created by Noel Emmanuel Roodly on 11/18/2018.
  */
-public class ContactList extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
+public class ContactList extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener,
+        ContactClickListener,
+        ContactLongClickListener{
 
 
     View v;
@@ -59,8 +72,44 @@ public class ContactList extends Fragment implements RecyclerItemTouchHelper.Rec
     ArrayList<Contact> phoneBookContact;
     ContactRecyclerAdapter mContactAdapter;
     public ProgressDialog progressDialog;
+    ContactLongClickListener mLongClickListener;
+    ContactClickListener mClickListener;
+    String smsNumber = null;
+    FragmentManager fm;
+    public final String regexStr = "^[+]?[0-9]{8,18}$";
 
     private com.emrood.e_contact.Utils.PreferenceManager prefManager;
+
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//
+//        ContactActivity contactActivity;
+//
+//        if(context instanceof ContactActivity){
+//            contactActivity = (ContactActivity) context;
+//            try {
+//                mClickListener = (ContactClickListener) contactActivity;
+//                mLongClickListener = (ContactLongClickListener) contactActivity;
+//            }catch (ClassCastException e){
+//                throw new ClassCastException(getActivity().toString()+ " must implement ONProductClickListner");
+//            }
+//
+//        }
+//
+//
+//    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mClickListener = (ContactClickListener) getActivity();
+            mLongClickListener = (ContactLongClickListener) getActivity();
+        }catch (ClassCastException e){
+            throw new ClassCastException(getActivity().toString()+ " must implement ONProductClickListner");
+        }
+    }
 
     @Nullable
     @Override
@@ -69,6 +118,7 @@ public class ContactList extends Fragment implements RecyclerItemTouchHelper.Rec
         contactList = v.findViewById(R.id.contactList);
         searchView = v.findViewById(R.id.contactSearch);
         LinearLayoutManager mLinearLayout = new LinearLayoutManager(getActivity());
+
 
 
         prefManager = new com.emrood.e_contact.Utils.PreferenceManager(getActivity());
@@ -86,8 +136,9 @@ public class ContactList extends Fragment implements RecyclerItemTouchHelper.Rec
 //        contacts.addAll(((App) App.getInstance()).getDaoSession().getContactDao().loadAll());
 //        mContactAdapter.notifyDataSetChanged();
 
-        mContactAdapter.newAddeddata(((App) App.getInstance()).getDaoSession().getContactDao().loadAll());
-
+        mContactAdapter.newAddeddata(((App) App.getInstance()).getDaoSession().getContactDao().queryBuilder().where(ContactDao.Properties.IsSecret.eq(false)).list());
+        mContactAdapter.setContactClickListener(ContactList.this);
+        mContactAdapter.setmContactLongClickListener(ContactList.this);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -99,7 +150,7 @@ public class ContactList extends Fragment implements RecyclerItemTouchHelper.Rec
             public boolean onQueryTextChange(String s) {
                 contacts.clear();
                 contactList.invalidate();
-                contacts.addAll(((App) App.getInstance()).getDaoSession().getContactDao().queryBuilder().whereOr(ContactDao.Properties.First_name.like("%" + s + "%"), ContactDao.Properties.Last_name.like("%" + s + "%"), ContactDao.Properties.Cellular_phone.like("%" + s + "%")).list());
+                contacts.addAll(((App) App.getInstance()).getDaoSession().getContactDao().queryBuilder().where(ContactDao.Properties.IsSecret.eq(false)).whereOr(ContactDao.Properties.First_name.like("%" + s + "%"), ContactDao.Properties.Last_name.like("%" + s + "%"), ContactDao.Properties.Cellular_phone.like("%" + s + "%")).list());
                 Log.d("INFO", contacts.toString());
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -116,7 +167,7 @@ public class ContactList extends Fragment implements RecyclerItemTouchHelper.Rec
             public boolean onClose() {
                 contacts.clear();
                 contactList.invalidate();
-                contacts.addAll(((App) App.getInstance()).getDaoSession().getContactDao().loadAll());
+                contacts.addAll(((App) App.getInstance()).getDaoSession().getContactDao().queryBuilder().where(ContactDao.Properties.IsSecret.eq(false)).list());
                 mContactAdapter.notifyDataSetChanged();
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -128,6 +179,8 @@ public class ContactList extends Fragment implements RecyclerItemTouchHelper.Rec
                 return false;
             }
         });
+
+
 
 //        ItemTouchHelper.SimpleCallback itemTouchCallBack = new RecyclerItemTouchHelper(0, ItemTouchHelper.RIGHT, this);
 //        new ItemTouchHelper(itemTouchCallBack).attachToRecyclerView(contactList);
@@ -150,7 +203,7 @@ public class ContactList extends Fragment implements RecyclerItemTouchHelper.Rec
                 ));
 
                 underlayButtons.add(new SwipeHelper.UnderlayButton(
-                        "SMS",
+                        "e-sms",
                         0,
                         Color.parseColor("#FF9502"),
                         new SwipeHelper.UnderlayButtonClickListener() {
@@ -253,6 +306,8 @@ public class ContactList extends Fragment implements RecyclerItemTouchHelper.Rec
 
                             cc.setFirst_name(name);
                             cc.setLast_name(last_name);
+                            cc.setIsFav(false);
+                            cc.setIsSecret(false);
 
                             phoneBookContact.add(cc);
                         }
@@ -300,6 +355,7 @@ public class ContactList extends Fragment implements RecyclerItemTouchHelper.Rec
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contacts = new ArrayList<>();
+        fm = getFragmentManager();
     }
 
     @Override
@@ -325,7 +381,7 @@ public class ContactList extends Fragment implements RecyclerItemTouchHelper.Rec
 //            String regexStr = "^[+]?[0-9]{8,18}$";
             String number = mContactAdapter.returnNumber(viewHolder.getAdapterPosition());
             if(number != null){
-                if(PhoneNumberUtils.isGlobalPhoneNumber(number)){
+                if(number.matches(regexStr)){
                     Toast.makeText(getActivity(), number, Toast.LENGTH_SHORT).show();
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
                     callIntent.setData(Uri.parse("tel:"+number));
@@ -373,7 +429,7 @@ public class ContactList extends Fragment implements RecyclerItemTouchHelper.Rec
     public void callNumber(int pos){
         String number = mContactAdapter.returnNumber(pos);
         if(number != null){
-            if(PhoneNumberUtils.isGlobalPhoneNumber(number)){
+            if(number.matches(regexStr)){
                 Toast.makeText(getActivity(), number, Toast.LENGTH_SHORT).show();
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:"+number));
@@ -391,29 +447,129 @@ public class ContactList extends Fragment implements RecyclerItemTouchHelper.Rec
     }
 
     public void sendSms(int pos){
-        String number = mContactAdapter.returnNumber(pos);
-        if(number != null){
-            if(PhoneNumberUtils.isGlobalPhoneNumber(number)){
-                Uri smsUri = Uri.parse("tel:" + number);
-                Intent intent = new Intent(Intent.ACTION_VIEW, smsUri);
-                intent.putExtra("address", number);
-                intent.putExtra("sms_body", "some text");
-                intent.setType("vnd.android-dir/mms-sms");//here setType will set the previous data null.
-                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                    startActivity(intent);
-                }
+
+        smsNumber = mContactAdapter.returnNumber(pos);
+        if(smsNumber != null){
+            if(smsNumber.matches(regexStr)){
+                Esms e = Esms.newInstance(smsNumber);
+                e.show(fm, "e-Sms");
             }else{
-                Toast.makeText(getActivity(), "not good", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.invalide_number, Toast.LENGTH_SHORT).show();
             }
         }else{
-            Toast.makeText(getActivity(), "Nummero invalide", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.invalide_number, Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+
+    public void reallySendSms(String content){
+        Uri smsUri = Uri.parse("tel:" + smsNumber);
+        Intent intent = new Intent(Intent.ACTION_VIEW, smsUri);
+        intent.putExtra("address", smsNumber);
+        intent.putExtra("sms_body", content);
+        intent.setType("vnd.android-dir/mms-sms");//here setType will set the previous data null.
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+
+
+    public interface OnContactClickListener{
+        public void onContactClick(Contact contact);
+    }
+
+
+    public interface OnContactLongClickListener{
+        public void onContactLongClick(Contact contact);
     }
 
 
     public void delete(int pos){
         ((App) App.getInstance()).getDaoSession().getContactDao().delete(contacts.get(pos));
         mContactAdapter.removeContact(pos);
+    }
+
+    public void editContact(int pos){
+        Contact c = contacts.get(pos);
+        Intent i = new Intent(getActivity(), AddContact.class);
+        i.putExtra("contactEdit", c);
+        startActivity(i);
+        getActivity().overridePendingTransition(R.anim.right, R.anim.left);
+    }
+
+    @Override
+    public void onItemClick(View view, int positon) {
+        Toast.makeText(getActivity(), "click " + positon, Toast.LENGTH_SHORT).show();
+        mClickListener.onItemClick(view, positon);
+        if(v != null){
+
+        }
+
+    }
+
+    public void onContactClick(Contact contact){
+//        Toast.makeText(getActivity(), "longclickz ", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void onContactLongClick(Contact contact){
+//        Toast.makeText(getActivity(), "longclickz", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void makeFavorite(int pos){
+
+    }
+
+    public void makeSecret(int pos){
+
+    }
+
+    @Override
+    public void onItemLongClick(View v, int position) {
+//        Toast.makeText(getActivity(), "longclick " + position, Toast.LENGTH_SHORT).show();
+        if( v != null){
+            final String[] fonts = {getString(R.string.edit), getString(R.string.add_fav), getString(R.string.secret_contact_add), getString(R.string.generate_contact_qr)};
+            final int p = position;
+            final Contact c = contacts.get(position);
+//            Toast.makeText(getActivity(), c.getFirst_name(), Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Select a text size");
+            builder.setItems(fonts, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (getString(R.string.edit).equals(fonts[which])){
+                        Toast.makeText(getActivity(),"Edit", Toast.LENGTH_SHORT).show();
+//                        editContact(p);
+                        Intent i = new Intent(getActivity(), AddContact.class);
+                        i.putExtra("contactEdit", c);
+                        startActivity(i);
+                        getActivity().overridePendingTransition(R.anim.right, R.anim.left);
+                    }
+                    else if (getString(R.string.add_fav).equals(fonts[which])){
+                        Toast.makeText(getActivity(),"favorite", Toast.LENGTH_SHORT).show();
+                        c.setIsFav(true);
+                        ((App) App.getInstance()).getDaoSession().getContactDao().update(c);
+                        mContactAdapter.makeContactFav(p);
+                    }
+                    else if (getString(R.string.secret_contact_add).equals(fonts[which])){
+                        Toast.makeText(getActivity(),"secret", Toast.LENGTH_SHORT).show();
+                        c.setIsSecret(true);
+                        ((App) App.getInstance()).getDaoSession().getContactDao().update(c);
+                        mContactAdapter.makeContactSecret(p);
+                    }
+                    else if (getString(R.string.generate_contact_qr).equals(fonts[which])){
+                        Toast.makeText(getActivity(),"e-QR", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getActivity(), QRViewerActivity.class);
+                        i.putExtra("e-contact", c);
+                        startActivity(i);
+                    }
+
+                }
+            });
+            builder.show();
+        }
     }
 }
