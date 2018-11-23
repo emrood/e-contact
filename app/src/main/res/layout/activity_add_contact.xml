@@ -56,8 +56,9 @@
                 <ImageView
                     android:id="@+id/ivName"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
                     app:srcCompat="@drawable/baseline_verified_user_black_36dp" />
 
 
@@ -106,8 +107,9 @@
                 <ImageView
                     android:id="@+id/ivLastName"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
                     app:srcCompat="@mipmap/ic_launcher_round" />
 
 
@@ -156,8 +158,9 @@
                 <ImageView
                     android:id="@+id/ivEntreprise"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
                     app:srcCompat="@mipmap/ic_launcher_round" />
 
 
@@ -206,7 +209,7 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:padding="4dp"
-                android:text="Numero"/>
+                android:text="@string/number"/>
 
 
             <LinearLayout
@@ -219,8 +222,9 @@
                 <ImageView
                     android:id="@+id/ivCellular"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
                     app:srcCompat="@drawable/baseline_smartphone_black_36dp" />
 
 
@@ -268,8 +272,9 @@
                 <ImageView
                     android:id="@+id/ivWorkPhone"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
                     app:srcCompat="@drawable/baseline_work_black_36dp" />
 
 
@@ -318,8 +323,9 @@
                 <ImageView
                     android:id="@+id/ivOtherphone"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
                     app:srcCompat="@drawable/baseline_contact_phone_black_36dp" />
 
 
@@ -381,8 +387,9 @@
                 <ImageView
                     android:id="@+id/ivEmail"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
                     app:srcCompat="@drawable/baseline_email_black_36dp" />
 
 
@@ -432,8 +439,9 @@
                 <ImageView
                     android:id="@+id/ivWorkMail"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
                     app:srcCompat="@drawable/baseline_work_black_36dp" />
 
 
@@ -483,8 +491,9 @@
                 <ImageView
                     android:id="@+id/ivOtherMail"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
                     app:srcCompat="@drawable/baseline_alternate_email_black_36dp" />
 
 
@@ -546,8 +555,9 @@
                 <ImageView
                     android:id="@+id/ivBirthday"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
                     app:srcCompat="@drawable/baseline_date_range_black_36dp" />
 
                 <android.support.design.widget.TextInputLayout
@@ -598,8 +608,9 @@
                 <ImageView
                     android:id="@+id/ivNotes"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
                     app:srcCompat="@drawable/baseline_note_add_black_36dp" />
 
 

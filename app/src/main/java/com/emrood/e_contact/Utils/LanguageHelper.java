@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 import java.util.Locale;
+
 /**
  * Created by Noel Emmanuel Roodly on 11/18/2018.
  */
@@ -17,40 +18,24 @@ public class LanguageHelper {
         Configuration config;
         config = new Configuration(res.getConfiguration());
 
+        Locale haitian = new Locale("ht", "HT");
+
         switch (lang) {
-            case "en":
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    config.setLocale(Locale.ENGLISH);
-                    config.locale = Locale.ENGLISH;
-                }else{
-                    config.locale = Locale.ENGLISH;
-                }
+            case "Anglais":
+                config.setLocale(Locale.ENGLISH);
+                config.locale = Locale.ENGLISH;
                 break;
-            case "fr":
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    config.setLocale(Locale.FRENCH);
-                    config.locale = Locale.FRENCH;
-
-
-                }else{
-                    config.locale = Locale.FRENCH;
-                }
+            case "Français":
+                config.setLocale(Locale.FRENCH);
+                config.locale = Locale.FRENCH;
                 break;
-            case "HT":
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    config.setLocale(Locale.JAPANESE);
-                    config.locale = Locale.JAPANESE;
-                }else{
-                    config.locale = Locale.JAPANESE;
-                }
+            case "Créole":
+                config.setLocale(Locale.JAPANESE);
+                config.locale = Locale.JAPANESE;
                 break;
             default:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    config.setLocale(Locale.ENGLISH);
-                    config.locale = Locale.ENGLISH;
-                }else{
-                    config.locale = Locale.ENGLISH;
-                }
+                config.setLocale(haitian);
+                config.locale = haitian;
                 break;
         }
 

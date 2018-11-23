@@ -14,31 +14,39 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.emrood.e_contact.Model.Contact;
 import com.emrood.e_contact.R;
 import com.emrood.e_contact.Utils.PreferenceManager;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.emrood.e_contact.UI.Activities.ContactActivity.hasPermissions;
 
 public class FirstLaunch extends AppCompatActivity {
 
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
-    SharedPreferences sharedPreferences ;
-    SharedPreferences.Editor editor ;
 
-
+    CircleImageView ivContactPhoto;
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
@@ -47,6 +55,7 @@ public class FirstLaunch extends AppCompatActivity {
     private Button btnSkip, btnNext;
     private PreferenceManager prefManager;
     public static String langPref = "HT";
+
 
     private static final int PERMISSION_ALL = 1;
 
@@ -76,7 +85,7 @@ public class FirstLaunch extends AppCompatActivity {
             finish();
         }
 
-        if(!hasPermissions(this, PERMISSIONS)){
+        if (!hasPermissions(this, PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
 
@@ -132,6 +141,74 @@ public class FirstLaunch extends AppCompatActivity {
                 // checking for last page
                 // if last page home screen will be launched
                 int current = getItem(+1);
+                Toast.makeText(FirstLaunch.this, String.valueOf(current), Toast.LENGTH_SHORT).show();
+                switch (current -1) {
+                    case 1:
+                        prefManager.setLangSelected(myViewPagerAdapter.language.getSelectedItem().toString());
+                        Toast.makeText(FirstLaunch.this, myViewPagerAdapter.language.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        if (TextUtils.isEmpty(myViewPagerAdapter.edtFirstName.getText())) {
+                            myViewPagerAdapter.edtFirstName.setError(getString(R.string.obligation_field));
+                            myViewPagerAdapter.edtFirstName.requestFocus();
+                            return;
+                        } else if (TextUtils.isEmpty(myViewPagerAdapter.edtLastName.getText())) {
+                            myViewPagerAdapter.edtLastName.setError(getString(R.string.obligation_field));
+                            myViewPagerAdapter.edtLastName.requestFocus();
+                            return;
+                        } else if (TextUtils.isEmpty(myViewPagerAdapter.edtEmailPersonnal.getText()) || !android.util.Patterns.EMAIL_ADDRESS.matcher(myViewPagerAdapter.edtEmailPersonnal.getText().toString()).matches()) {
+                            myViewPagerAdapter.edtEmailPersonnal.setError(getString(R.string.obligation_field));
+                            myViewPagerAdapter.edtEmailPersonnal.requestFocus();
+                            return;
+                        } else if (TextUtils.isEmpty(myViewPagerAdapter.edtPin.getText())) {
+                            myViewPagerAdapter.edtPin.setError(getString(R.string.obligation_field));
+                            myViewPagerAdapter.edtPin.requestFocus();
+                            return;
+                        } else if (!TextUtils.equals(myViewPagerAdapter.edtPin.getText(), myViewPagerAdapter.edtPin2.getText())) {
+                            myViewPagerAdapter.edtPin2.setError(getString(R.string.invalide_pin));
+                            myViewPagerAdapter.edtPin2.requestFocus();
+                            return;
+                        }
+
+                        Contact c = new Contact();
+                        c.setFirst_name(myViewPagerAdapter.edtFirstName.getText().toString().trim());
+                        c.setLast_name(myViewPagerAdapter.edtLastName.getText().toString().trim());
+                        if(!TextUtils.isEmpty(myViewPagerAdapter.edtPhoneCellular.getText().toString())){
+                            c.setCellular_phone(myViewPagerAdapter.edtPhoneCellular.getText().toString().trim());
+                        }
+                        if(!TextUtils.isEmpty(myViewPagerAdapter.edtEntreprise.getText().toString())){
+                            c.setEntreprise(myViewPagerAdapter.edtEntreprise.getText().toString().trim());
+                        }
+                        if(!TextUtils.isEmpty(myViewPagerAdapter.edtEmailPersonnal.getText().toString())){
+                            c.setPersonal_email(myViewPagerAdapter.edtEmailPersonnal.getText().toString().trim());
+                        }
+                        if(!TextUtils.isEmpty(myViewPagerAdapter.edtPhoneWork.getText().toString())){
+                            c.setWork_phone(myViewPagerAdapter.edtPhoneWork.getText().toString().trim());
+                        }
+                        if(!TextUtils.isEmpty(myViewPagerAdapter.edtEmailProfessional.getText().toString()) && android.util.Patterns.EMAIL_ADDRESS.matcher(myViewPagerAdapter.edtEmailProfessional.getText().toString()).matches()){
+                            c.setWork_email(myViewPagerAdapter.edtEmailProfessional.getText().toString().trim());
+                        }
+
+                        if(!TextUtils.isEmpty(myViewPagerAdapter.edtPhoneOther.getText().toString())){
+                            c.setOther_phone(myViewPagerAdapter.edtPhoneOther.getText().toString().trim());
+                        }
+                        if(!TextUtils.isEmpty(myViewPagerAdapter.edtEmailOther.getText().toString()) && android.util.Patterns.EMAIL_ADDRESS.matcher(myViewPagerAdapter.edtEmailOther.getText().toString()).matches()){
+                            c.setOther_email(myViewPagerAdapter.edtEmailOther.getText().toString().trim());
+                        }
+
+                        c.setIsFav(false);
+                        c.setIsSecret(false);
+
+                        prefManager.saveUserContact(c);
+                        prefManager.setUserInfoSaved(true);
+                        prefManager.saveUsetPin(myViewPagerAdapter.edtPin.getText().toString());
+                        Toast.makeText(FirstLaunch.this, "User saved", Toast.LENGTH_SHORT).show();
+
+                        break;
+                    default:
+                        break;
+
+                }
                 if (current < layouts.length) {
                     // move to next screen
                     viewPager.setCurrentItem(current);
@@ -140,7 +217,6 @@ public class FirstLaunch extends AppCompatActivity {
                 }
             }
         });
-
 
 
     }
@@ -157,7 +233,7 @@ public class FirstLaunch extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
-        Intent i  = new Intent(FirstLaunch.this, Launcher.class);
+        Intent i = new Intent(FirstLaunch.this, Launcher.class);
         startActivity(i);
         overridePendingTransition(R.anim.right, R.anim.left);
     }
@@ -225,6 +301,7 @@ public class FirstLaunch extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
+
     /**
      * View pager adapter
      */
@@ -234,12 +311,41 @@ public class FirstLaunch extends AppCompatActivity {
         public MyViewPagerAdapter() {
         }
 
+        public EditText edtFirstName, edtLastName, edtEntreprise,
+                edtPhoneCellular, edtPhoneWork, edtPhoneOther, edtEmailPersonnal,
+                edtEmailProfessional, edtEmailOther, edtPin, edtPin2;
+
+        public Spinner language;
+
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
+
+            switch (position) {
+                case 0:
+
+                    break;
+                case 1:
+                    language = view.findViewById(R.id.spinLang);
+                    break;
+                case 2:
+                    edtPin = view.findViewById(R.id.edtPin);
+                    edtPin2 = view.findViewById(R.id.edtPin2);
+                    edtFirstName = view.findViewById(R.id.edtfirst_name);
+                    edtLastName = view.findViewById(R.id.edtLastname);
+                    edtEmailPersonnal = view.findViewById(R.id.edtEmail);
+                    edtEmailProfessional = view.findViewById(R.id.edtWorlMail);
+                    edtEmailOther = view.findViewById(R.id.edtOtherMail);
+                    edtPhoneCellular = view.findViewById(R.id.edtPhoneCellular);
+                    edtPhoneWork = view.findViewById(R.id.edtphoneWork);
+                    edtPhoneOther = view.findViewById(R.id.edtPhoneOther);
+                    edtEntreprise = view.findViewById(R.id.edtEntreprise);
+                    ivContactPhoto = view.findViewById(R.id.ivContactPhoto);
+                    break;
+            }
 
             return view;
         }

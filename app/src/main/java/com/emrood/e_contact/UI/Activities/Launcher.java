@@ -2,6 +2,8 @@ package com.emrood.e_contact.UI.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.emrood.e_contact.R;
+import com.emrood.e_contact.Utils.LanguageHelper;
+import com.emrood.e_contact.Utils.PreferenceManager;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -35,6 +39,8 @@ public class Launcher extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+    private PreferenceManager prefManager;
+    String language;
 
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -112,6 +118,14 @@ public class Launcher extends AppCompatActivity {
         // Upon interacting with UI controls, delay any scheduled hide()
         //        // operations to prevent the jarring behavior of controls going away
         //        // while interacting with the UI.
+        prefManager = new PreferenceManager(this);
+        language = prefManager.getLangSelected();
+
+        try {
+            LanguageHelper.changeLocal(getResources(), language);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         new Handler().postDelayed(new Runnable() {
             @Override

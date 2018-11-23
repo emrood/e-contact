@@ -1,6 +1,8 @@
 package com.emrood.e_contact.UI.Activities;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -41,6 +43,7 @@ import com.emrood.e_contact.Model.QRObject;
 import com.emrood.e_contact.R;
 import com.emrood.e_contact.UI.Fragments.ContactList;
 import com.emrood.e_contact.UI.Fragments.ContactScan;
+import com.emrood.e_contact.UI.Fragments.Settings;
 import com.emrood.e_contact.UI.Listeners.ContactClickListener;
 import com.emrood.e_contact.UI.Listeners.ContactLongClickListener;
 import com.emrood.e_contact.UI.Listeners.SmsListener;
@@ -165,7 +168,10 @@ public class ContactActivity extends AppCompatActivity implements
         int id = item.getItemId();
         switch (id){
             case R.id.action_settings:
-                Toast.makeText(this, "Settings screen", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Settings screen", Toast.LENGTH_SHORT).show();
+                FragmentManager fm = getSupportFragmentManager();
+                Settings set = new Settings();
+                set.show(fm, "SETTINGS");
                 break;
             case R.id.e_QR:
                 Toast.makeText(this, "generate QR", Toast.LENGTH_SHORT).show();
@@ -179,6 +185,17 @@ public class ContactActivity extends AppCompatActivity implements
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+    public void restartApp(){
+        Intent mStartActivity = new Intent(ContactActivity.this, Launcher.class);
+        int mPendingIntentId = 123456;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(ContactActivity.this, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager) ContactActivity.this.getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, 1000, mPendingIntent);
+        System.exit(0);
     }
 
     @Override

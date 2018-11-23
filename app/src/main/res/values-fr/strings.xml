@@ -15,13 +15,13 @@
     </string-array>
 
     <array name="array_dot_active">
-        <item>#a7a7a7</item>
         <item>#4f4f4f</item>
-        <item>#d3d3d3</item>
+        <item>#4f4f4f</item>
+        <item>#4f4f4f</item>
     </array>
     <array name="array_dot_inactive">
-        <item>#a7a7a7</item>
-        <item>#4f4f4f</item>
+        <item>#d3d3d3</item>
+        <item>#d3d3d3</item>
         <item>#d3d3d3</item>
     </array>
     <string name="title_activity_contact">ContactActivity</string>
@@ -81,4 +81,15 @@
     <string name="sending">Envoie...</string>
     <string name="generate_contact_qr">Générer E-QR</string>
     <string name="e_qr_all">E-QR</string>
+    <string name="define_lang">Définir une langue</string>
+    <string name="security">Securité</string>
+    <string name="pin_again">PIN (encore)</string>
+    <string name="pin">PIN</string>
+    <string name="invalide_pin">Le code PIN ne correspond pas</string>
+    <string name="number">Numero</string>
+    <string name="scanning">e-Scan en cours</string>
+    <string name="define">Definir</string>
+    <string name="set">Parametrage</string>
+    <string name="wait_message">Patientez s\'il vous plait</string>
+    <string name="restart_text">e-contact va redemarer</string>
 </resources>

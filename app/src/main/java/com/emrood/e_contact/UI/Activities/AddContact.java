@@ -119,7 +119,7 @@ public class AddContact extends AppCompatActivity {
 
     private void selectImage() {
         final CharSequence[] options = {getString(R.string.choose_in_galery), getString(R.string.camera), getString(R.string.annule) };
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.photo_contact);
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
@@ -484,7 +484,8 @@ public class AddContact extends AppCompatActivity {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            finish();
+                            Intent i = new Intent(AddContact.this, ContactActivity.class);
+                            startActivity(i);
                         }})
                     .setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
                         @Override
@@ -493,6 +494,8 @@ public class AddContact extends AppCompatActivity {
                         }
                     }).show();
         }else{
+            Intent i = new Intent(AddContact.this, ContactActivity.class);
+            startActivity(i);
             super.onBackPressed();
         }
     }

@@ -57,7 +57,7 @@ public class ContactScan extends Fragment {
         if(getUserVisibleHint()){
             IntentIntegrator integrator = new IntentIntegrator(getActivity());
             integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-            integrator.setPrompt("e-Scan en cours");
+            integrator.setPrompt(getString(R.string.scanning));
             integrator.setCameraId(0);
             integrator.setBeepEnabled(false);
             integrator.setBarcodeImageEnabled(false);
@@ -81,7 +81,7 @@ public class ContactScan extends Fragment {
         if(isVisibleToUser){
             IntentIntegrator integrator = new IntentIntegrator(getActivity());
             integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-            integrator.setPrompt("e-Scan en cours");
+            integrator.setPrompt(getString(R.string.scanning));
             integrator.setCameraId(0);
             integrator.setBeepEnabled(false);
             integrator.setBarcodeImageEnabled(false);
