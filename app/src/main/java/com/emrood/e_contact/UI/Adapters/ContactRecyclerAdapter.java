@@ -1,6 +1,9 @@
 package com.emrood.e_contact.UI.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -19,6 +22,8 @@ import com.emrood.e_contact.R;
 import com.emrood.e_contact.UI.Listeners.ContactClickListener;
 import com.emrood.e_contact.UI.Listeners.ContactLongClickListener;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,9 +96,17 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
             viewHolder.ivContactProperties.setVisibility(View.GONE);
         }
 
-//        if(!TextUtils.isEmpty(contacts.get(i).getPhoto())){
+        if(!TextUtils.isEmpty(c.getPhoto())){
+            try{
+//                Bitmap profil = BitmapFactory.decodeFile(c.getPhoto());
+//                viewHolder.tvPhoto.setImageBitmap(profil);
+                Uri uri = Uri.fromFile(new File(c.getPhoto()));
+                Glide.with(mContext).load(uri).centerCrop().into(viewHolder.tvPhoto);
+            }catch (Exception e){
+
+            }
 //            Glide.with(mContext).load("").into(viewHolder.tvPhoto);
-//        }
+        }
 
     }
 

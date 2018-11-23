@@ -65,7 +65,9 @@ public class FirstLaunch extends AppCompatActivity {
             Manifest.permission.USE_BIOMETRIC,
             Manifest.permission.BODY_SENSORS,
             Manifest.permission.SEND_SMS,
-            Manifest.permission.READ_CONTACTS
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
     Gson gson;

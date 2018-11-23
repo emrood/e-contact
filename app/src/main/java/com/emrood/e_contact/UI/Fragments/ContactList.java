@@ -541,7 +541,7 @@ public class ContactList extends Fragment implements RecyclerItemTouchHelper.Rec
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     if (getString(R.string.edit).equals(fonts[which])){
-                        Toast.makeText(getActivity(),"Edit", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(),"Edit", Toast.LENGTH_SHORT).show();
 //                        editContact(p);
                         Intent i = new Intent(getActivity(), AddContact.class);
                         i.putExtra("contactEdit", c);

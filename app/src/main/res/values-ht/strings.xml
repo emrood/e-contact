@@ -92,4 +92,5 @@
     <string name="set">Dispozisyon</string>
     <string name="wait_message">Tanpri tann</string>
     <string name="restart_text">e-contact ap relanse</string>
+    <string name="delete_picture">Supprimer la photo</string>
 </resources>

@@ -80,7 +80,9 @@ public class ContactActivity extends AppCompatActivity implements
             Manifest.permission.USE_BIOMETRIC,
             Manifest.permission.BODY_SENSORS,
             Manifest.permission.SEND_SMS,
-            Manifest.permission.READ_CONTACTS
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
 
@@ -92,6 +94,8 @@ public class ContactActivity extends AppCompatActivity implements
     private ViewPager mViewPager;
     Boolean exitApp = false;
     TabLayout tabLayout;
+    Contact userContact;
+
 
 
     @Override
@@ -116,6 +120,7 @@ public class ContactActivity extends AppCompatActivity implements
 
         prefManager = new PreferenceManager(this);
         prefManager.setFirstTimeLaunch(false);
+        userContact = prefManager.getUserContact();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +181,7 @@ public class ContactActivity extends AppCompatActivity implements
             case R.id.e_QR:
                 Toast.makeText(this, "generate QR", Toast.LENGTH_SHORT).show();
                 Intent e = new Intent(ContactActivity.this, QRViewerActivity.class);
+                e.putExtra("e-contact", userContact);
                 startActivity(e);
                 break;
             case R.id.my_info:

@@ -92,4 +92,5 @@
     <string name="set">Parametrage</string>
     <string name="wait_message">Patientez s\'il vous plait</string>
     <string name="restart_text">e-contact va redemarer</string>
+    <string name="delete_picture">Supprimer la photo</string>
 </resources>

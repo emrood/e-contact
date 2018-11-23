@@ -92,4 +92,5 @@
     <string name="set">Setting</string>
     <string name="wait_message">hang on please</string>
     <string name="restart_text">e-contact will restart</string>
+    <string name="delete_picture">Supprimer la photo</string>
 </resources>
